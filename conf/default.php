@@ -9,3 +9,5 @@ $conf['pbf_iptime_file'] = DOKU_PLUGIN.'preventbruteforce/files/users.pbf'; // L
 $conf['pbf_block_file']  = DOKU_PLUGIN.'preventbruteforce/files/block.pbf'; // Log blocked users into this one
 $conf['pbf_lockfile']    = DOKU_PLUGIN.'preventbruteforce/files/lock.pbf';  // Lock file to know when we can put content into the two others
 
+$conf['pbf_send_mail']   = '';                // Send email to admins when a user has been banned, leave blank if to noone
+

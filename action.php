@@ -56,9 +56,12 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 	public function register(&$controller)
 	{
 		$controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'disable_login', array());
-		$controller->register_hook('AUTH_LOGIN_CHECK', 'AFTER', $this, 'block_user', array());
+		$controller->register_hook('AUTH_LOGIN_CHECK', 'AFTER', $this, 'register_login_fail', array());
 	}
 
+	/**
+	 * Look if we have to disable login for this particuliar IP address
+	 */
 	public function disable_login(&$event, $param)
 	{
 		global $ACT;
@@ -145,11 +148,14 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 			$this->unlock();
 
 			if(array_key_exists($ip, $this->blocked))
-				$this->disableLogin();
+				$this->disableLogin($ip);
 		}
 	}
 
-	public function block_user(&$event, $param)
+	/**
+	 * Register failed attempts to login
+	 */
+	public function register_login_fail(&$event, $param)
 	{
 		global $ACT;
 
@@ -187,6 +193,9 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 		}
 	}
 
+	/**
+	 * Use a lock file not to update files concurrently
+	 */
 	protected function lock()
 	{
 		$lockf = $this->getConf('pbf_lockfile');
@@ -198,13 +207,17 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 
 		if(flock($this->lockfh, LOCK_EX) === false)
 		{
-				fclose($this->lockfh);
-				return false;
+			fclose($this->lockfh);
+			$this->lockfh = null;
+			return false;
 		}
 
 		return true;
 	}
 
+	/**
+	 * Unlock previously locked file
+	 */
 	protected function unlock()
 	{
 		if(!is_null($this->lockfh))
@@ -215,12 +228,34 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 		}
 	}
 
-	protected function disableLogin()
+	/**
+	 * Change the login action to the show one
+	 *
+	 * @param $new False if it's not a new IP which is banned, the new banned IP otherwise
+	 */
+	protected function disableLogin($new = false)
 	{
-		global $ACT, $lang;
+		global $ACT, $conf, $lang;
 
+		// Just show and display a message slightly different (rendered in blue instead of red)
 		$ACT = 'show';
 		msg($lang['badlogin']);
+
+		$email = $this->getConf('pbf_send_mail');
+		if(!empty($email) && $new)
+		{
+			// Prepare fields
+			$subject = sprintf($this->getLang('mailsubject'), $conf['title']);
+			$body    = $this->plugin_locale_xhtml('mailbody');
+			$from    = $conf['mailfrom'];
+
+			// Do some replacements
+			str_replace('@IP@', $new, $body);
+			str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
+
+			// Finally send mail
+			mail_send($email, $subject, $body, $from);
+		}
 	}
 }
 
