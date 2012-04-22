@@ -1,0 +1,13 @@
+dokuwiki-preventbruteforce
+==========================
+
+DokuWiki plugin to prevent brute force attacks by delaying them.
+
+An IP address failing too many times to authenticate will be banned from the login form a configurable amount of time (10 minutes by default)
+
+
+TODO
+====
+
+- Add a configuration option to send mail when a user/IP has been banned
+
