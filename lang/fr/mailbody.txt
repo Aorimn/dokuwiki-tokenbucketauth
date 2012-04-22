@@ -1,0 +1,7 @@
+
+Une nouvelle adresse IP vient d'être bannie : @IP@
+
+
+Cet email a été généré automatiquement par DokuWiki.
+Si vous ne souhaitez plus recevoir d'email, regardez le plugin preventbruteforce à @DOKUWIKIURL@
+
