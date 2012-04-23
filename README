@@ -7,3 +7,11 @@ An IP address failing too many times to authenticate will be banned from the log
 
 An email can be sent to a configurable email address when an IP has just been banned.
 
+
+ChangeLog
+=========
+
+0.1 Functionnal plugin (well, it's blocking IP addresses at least)
+0.2 Bugfix: @IP@ & @DOKUWIKIURL@ in mails now replaced
+    Bugfix: No more email when a banned user is already banned and want to see again the login form
+

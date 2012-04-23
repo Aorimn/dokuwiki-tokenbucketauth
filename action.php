@@ -5,7 +5,7 @@
  *
  * @license    GPL 3 (http://www.gnu.org/licenses/gpl.html)
  * @author     Aorimn <Aorimn@giboulees.net>
- * @version    0.1
+ * @version    0.2
  */
 
 /**
@@ -95,11 +95,12 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 			/* If the user is already blocked */
 			if(array_key_exists($ip, $this->blocked))
 			{
-				if($this->blocked[$ip] + $this->getConf('auth_block_time') > $time)
+				if($this->blocked[$ip] + $this->getConf('auth_block_time') < $time)
 				{
 					/* If the time isn't elapsed yet */
 					$this->disableLogin();
 					$this->unlock();
+					return;
 				}
 				else
 				{
@@ -242,7 +243,7 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 		msg($lang['badlogin']);
 
 		$email = $this->getConf('pbf_send_mail');
-		if(!empty($email) && $new)
+		if(!empty($email) && $new && !empty($new))
 		{
 			// Prepare fields
 			$subject = sprintf($this->getLang('mailsubject'), $conf['title']);
@@ -250,8 +251,8 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 			$from    = $conf['mailfrom'];
 
 			// Do some replacements
-			str_replace('@IP@', $new, $body);
-			str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
+			$body = str_replace('@IP@', $new, $body);
+			$body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
 
 			// Finally send mail
 			mail_send($email, $subject, $body, $from);
