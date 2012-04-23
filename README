@@ -12,6 +12,8 @@ ChangeLog
 =========
 
 0.1 Functionnal plugin (well, it's blocking IP addresses at least)
+
 0.2 Bugfix: @IP@ & @DOKUWIKIURL@ in mails now replaced
     Bugfix: No more email when a banned user is already banned and want to see again the login form
+    Bugfix: Now a user is banned for his/her failed attempts, not for his/her viewing the login page
 

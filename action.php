@@ -160,7 +160,7 @@ class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
 	{
 		global $ACT;
 
-		if($ACT === 'login' && !isset($_SESSION['REMOTE_USER']))
+		if($ACT === 'login' && !empty($event->data['user']) && !isset($_SESSION['REMOTE_USER']))
 		{
 			$this->lock();
 
