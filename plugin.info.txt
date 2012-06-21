@@ -1,7 +1,7 @@
-base   preventbruteforce
+base   tokenbucketauth
 author Aorimn
 email  Aorimn@giboulees.net
 date   2012-04-23
 name   Prevent brute force attacks
-desc   Prevent brute force attacks by delaying them
-url    https://github.com/Aorimn/dokuwiki-preventbruteforce
+desc   Prevent brute force attacks by delaying them using a token bucket
+url    https://github.com/Aorimn/dokuwiki-tokenbucketauth

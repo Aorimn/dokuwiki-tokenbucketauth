@@ -5,7 +5,7 @@
  *
  * @license    GPL 3 (http://www.gnu.org/licenses/gpl.html)
  * @author     Aorimn <Aorimn@giboulees.net>
- * @version    0.2
+ * @version    0.3
  */
 
 /**
@@ -29,7 +29,7 @@ if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 require_once(DOKU_PLUGIN.'action.php');
 
-class action_plugin_preventbruteforce extends DokuWiki_Action_Plugin
+class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 {
 	/** Lock file */
 	protected $lockfh;

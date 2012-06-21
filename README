@@ -1,5 +1,5 @@
-dokuwiki-preventbruteforce
-==========================
+dokuwiki-tokenbucketauth
+========================
 
 DokuWiki plugin to prevent brute force attacks by delaying them.
 
@@ -16,4 +16,6 @@ ChangeLog
 0.2 Bugfix: @IP@ & @DOKUWIKIURL@ in mails now replaced
     Bugfix: No more email when a banned user is already banned and want to see again the login form
     Bugfix: Now a user is banned for his/her failed attempts, not for his/her viewing the login page
+
+0.3 Plugin renaming
 
