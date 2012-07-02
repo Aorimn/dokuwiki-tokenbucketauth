@@ -1,0 +1,10 @@
+<Directory (.git|lang)>
+	Deny from all
+	Order allow,deny
+</Directory>
+
+<Files (README|plugin.info.txt|.htaccess)>
+	Deny from all
+	Order allow,deny
+</Files>
+
