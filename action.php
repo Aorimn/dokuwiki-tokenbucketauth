@@ -71,7 +71,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$this->lock();
 
 			$content = '';
-			$file    = $this->getConf('pbf_block_file');
+			$file    = $this->getConf('tba_block_file');
 
 			/* Get the users which are blocked */
 			if(is_readable($file))
@@ -86,7 +86,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$time = time();
 
 			/* If the user come from a whitelisted address */
-			if(in_array($ip, $this->getConf('pbf_whitelist')))
+			if(in_array($ip, $this->getConf('tba_whitelist')))
 			{
 				$this->unlock();
 				return;
@@ -95,7 +95,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			/* If the user is already blocked */
 			if(array_key_exists($ip, $this->blocked))
 			{
-				if($this->blocked[$ip] + $this->getConf('auth_block_time') < $time)
+				if($this->blocked[$ip] + $this->getConf('tba_block_time') < $time)
 				{
 					/* If the time isn't elapsed yet */
 					$this->disableLogin();
@@ -110,8 +110,8 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			}
 
 			$ts   = $this->users_tracker[$ip];
-			$time = $time - $this->getConf('pbf_mean_time');
-			$max  = $this->getConf('pbf_nb_attempt');
+			$time = $time - $this->getConf('tba_mean_time');
+			$max  = $this->getConf('tba_nb_attempt');
 			$cpt  = 0;
 
 			$i        = 0;
@@ -137,10 +137,10 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 
 			/* If there's more attempts than authorized, block the IP */
 			if($cpt >= $max)
-				$this->blocked[$ip] = $time + $this->getConf('auth_mean_time');
+				$this->blocked[$ip] = $time + $this->getConf('tba_mean_time');
 
 			/* Save the timestamps file */
-			io_saveFile($this->getConf('pbf_iptime_file'), serialize($this->users_tracker));
+			io_saveFile($this->getConf('tba_iptime_file'), serialize($this->users_tracker));
 
 			/* Save the blocked-IP file */
 			io_saveFile($file, serialize($this->blocked));
@@ -165,7 +165,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$this->lock();
 
 			$content = '';
-			$file = $this->getConf('pbf_iptime_file');
+			$file = $this->getConf('tba_iptime_file');
 
 			/* Get the previous, the registered array of visits */
 			if(is_readable($file))
@@ -199,7 +199,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	 */
 	protected function lock()
 	{
-		$lockf = $this->getConf('pbf_lockfile');
+		$lockf = $this->getConf('tba_lockfile');
 
 		$this->lockfh = fopen($lockf, 'w', false);
 
@@ -242,7 +242,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 		$ACT = 'show';
 		msg($lang['badlogin']);
 
-		$email = $this->getConf('pbf_send_mail');
+		$email = $this->getConf('tba_send_mail');
 		if(!empty($email) && $new && !empty($new))
 		{
 			// Prepare fields
