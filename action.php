@@ -5,7 +5,7 @@
  *
  * @license    GPL 3 (http://www.gnu.org/licenses/gpl.html)
  * @author     Aorimn <Aorimn@giboulees.net>
- * @version    0.3
+ * @version    0.4
  */
 
 /**
@@ -95,7 +95,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			/* If the user is already blocked */
 			if(array_key_exists($ip, $this->blocked))
 			{
-				if($this->blocked[$ip] + $this->getConf('tba_block_time') < $time)
+				if($this->blocked[$ip] + $this->getConf('tba_block_time') > $time)
 				{
 					/* If the time isn't elapsed yet */
 					$this->disableLogin();

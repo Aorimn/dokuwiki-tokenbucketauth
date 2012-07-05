@@ -19,3 +19,6 @@ ChangeLog
 
 0.3 Plugin renaming
 
+0.4 Bugfix: wrong comparison between times (thanks ayambit)
+    Vars renaming according to the plugin name
+
