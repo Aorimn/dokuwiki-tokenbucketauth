@@ -118,14 +118,17 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$to_unset = array();
 
 			/* Check whether to block or not the IP */
-			foreach($ts as $onets)
+			if(!is_null($ts))
 			{
-				if($time < $onets)
-					$cpt++;
-				else
-					$to_unset[] = $i;
+				foreach($ts as $onets)
+				{
+					if($time < $onets)
+						$cpt++;
+					else
+						$to_unset[] = $i;
 
-				$i++;
+					$i++;
+				}
 			}
 
 			/* Clean old timestamps */
