@@ -86,7 +86,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$time = time();
 
 			/* If the user come from a whitelisted address */
-			if(in_array($ip, $this->getConf('tba_whitelist')))
+			if(in_array($ip, preg_split('/[\s,]+/', $this->getConf('tba_whitelist'), null, PREG_SPLIT_NO_EMPTY)))
 			{
 				$this->unlock();
 				return;

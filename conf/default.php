@@ -3,7 +3,7 @@
 $conf['tba_block_time'] = 600;                // Block a user 10 minutes
 $conf['tba_nb_attempt'] = 5;                  // If he failed 5 attempts to login
 $conf['tba_mean_time']  = 120;                // Within 2 minutes
-$conf['tba_whitelist']  = array('127.0.0.1'); // And is not on the white list
+$conf['tba_whitelist']  = '127.0.0.1';        // And is not on the white list
 
 $conf['tba_iptime_file'] = DOKU_PLUGIN.'tokenbucketauth/files/users.pbf'; // Log users attempts into this file
 $conf['tba_block_file']  = DOKU_PLUGIN.'tokenbucketauth/files/block.pbf'; // Log blocked users into this one
