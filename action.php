@@ -71,7 +71,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$this->lock();
 
 			$content = '';
-			$file    = $conf['cachedir'] . $this->getConf('tba_block_file');
+			$file    = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
 
 			/* Get the users which are blocked */
 			if(is_readable($file))
@@ -143,7 +143,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 				$this->blocked[$ip] = $time + $this->getConf('tba_mean_time');
 
 			/* Save the timestamps file */
-			io_saveFile($conf['cachedir'] . $this->getConf('tba_iptime_file'), serialize($this->users_tracker));
+			io_saveFile($conf['cachedir'] . '/' . $this->getConf('tba_iptime_file'), serialize($this->users_tracker));
 
 			/* Save the blocked-IP file */
 			io_saveFile($file, serialize($this->blocked));
@@ -168,7 +168,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$this->lock();
 
 			$content = '';
-			$file = $conf['cachedir'] . $this->getConf('tba_iptime_file');
+			$file = $conf['cachedir'] . '/' . $this->getConf('tba_iptime_file');
 
 			/* Get the previous, the registered array of visits */
 			if(is_readable($file))
@@ -202,7 +202,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	 */
 	protected function lock()
 	{
-		$lockf = $conf['cachedir'] . $this->getConf('tba_lockfile');
+		$lockf = $conf['cachedir'] . '/' . $this->getConf('tba_lockfile');
 
 		$this->lockfh = fopen($lockf, 'w', false);
 
