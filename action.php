@@ -202,6 +202,8 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	 */
 	protected function lock()
 	{
+		global $conf;
+
 		$lockf = $conf['cachedir'] . '/' . $this->getConf('tba_lockfile');
 
 		$this->lockfh = fopen($lockf, 'w', false);
