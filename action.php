@@ -161,7 +161,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	 */
 	public function register_login_fail(&$event, $param)
 	{
-		global $ACT;
+		global $ACT, $conf;
 
 		if($ACT === 'login' && !empty($event->data['user']) && !isset($_SESSION['REMOTE_USER']))
 		{
