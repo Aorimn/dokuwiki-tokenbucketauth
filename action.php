@@ -252,7 +252,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 		{
 			// Prepare fields
 			$subject = sprintf($this->getLang('mailsubject'), $conf['title']);
-			$body    = $this->plugin_locale_xhtml('mailbody');
+			$body    = $this->locale_xhtml('mailbody');
 			$from    = $conf['mailfrom'];
 
 			// Do some replacements
