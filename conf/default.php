@@ -11,3 +11,4 @@ $conf['tba_lockfile']    = 'lock.pbf';        // Lock file to know when we can p
 
 $conf['tba_send_mail']   = '';                // Send email to admins when a user has been banned, leave blank if to noone
 
+$conf['tba_block_login_only'] = 0;            // Define whether to block the whole wiki or just the login page

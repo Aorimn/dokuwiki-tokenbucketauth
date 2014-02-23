@@ -11,3 +11,4 @@ $meta['tba_lockfile']    = array('string');   // Lock file to know when we can p
 
 $meta['tba_send_mail']   = array('email');    // Define whom to send email when a user has been banned
 
+$meta['tba_block_login_only'] = array('onoff'); // Define whether to block the whole wiki or just the login page
