@@ -24,10 +24,13 @@
 
 
 // must be run within Dokuwiki
-if(!defined('DOKU_INC')) die('yeurk!');
-if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
+if(!defined('DOKU_INC'))
+	die('yeurk!');
+if(!defined('DOKU_PLUGIN'))
+	define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 
-require_once(DOKU_PLUGIN.'action.php');
+require_once(DOKU_PLUGIN . 'action.php');
+
 
 class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 {
@@ -80,7 +83,11 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			if(empty($content))
 				$this->blocked = array();
 			else
-				$this->blocked = unserialize($content);
+				$this->blocked = @unserialize($content);
+
+			/* Deal with the case of unserialize() failing */
+			if($this->blocked === false)
+				$this->blocked = array();
 
 			$ip   = $_SERVER['REMOTE_ADDR'];
 			$time = time();
@@ -175,9 +182,13 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 				$content = file_get_contents($file);
 			
 			/* Initialize from the file or not */
-			if(!empty($content))
-				$this->users_tracker = unserialize($content);
+			if(empty($content))
+				$this->users_tracker = array();
 			else
+				$this->users_tracker = @unserialize($content);
+
+			/* Deal with the case of unserialize() failing */
+			if($this->users_tracker === false)
 				$this->users_tracker = array();
 
 			$ip   = $_SERVER['REMOTE_ADDR'];
