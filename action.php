@@ -69,7 +69,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	{
 		global $ACT, $conf;
 
-		if($ACT === 'login' || !$this->getConf('tba_block_login_only'))
+		if($ACT === 'login' || $this->getConf('tba_block_whole_wiki'))
 		{
 			$this->lock();
 

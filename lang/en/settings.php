@@ -11,3 +11,4 @@ $lang['tba_lockfile']    = 'Lock file to know when we can put content into the t
 
 $lang['tba_send_mail']   = 'Define whom to send email when a user has been banned';
 
+$lang['tba_block_whole_wiki'] = 'Block the whole wiki (just the login page by default)';

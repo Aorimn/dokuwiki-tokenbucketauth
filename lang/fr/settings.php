@@ -1,4 +1,5 @@
 <?php
+
 $lang['tba_block_time']  = 'Durée du blocage en secondes';
 $lang['tba_nb_attempt']  = 'Nombre de tentatives maximum d\'affilé avant blocage.';
 $lang['tba_mean_time']   = 'Temps maximum (en secondes) englobant l\'ensemble des tentatives infructueuses.';
@@ -10,3 +11,4 @@ $lang['tba_lockfile']    = 'Fichier verrou nécessaire à la gestion des autres 
 
 $lang['tba_send_mail']   = 'Adresse de courriel où expédier les notifications de blocage.';
 
+$lang['tba_block_whole_wiki'] = 'Blocage du wiki tout entier (ou de la page de login uniquement, par défaut)';
