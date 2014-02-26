@@ -1,0 +1,8 @@
+====== Accès interdit ======
+
+Votre adresse IP est actuellement interdite d'accès à ce wiki, parce qu'elle a
+été repérée comme étant abusive sur le formulaire de connexion.
+
+Si vous n'avez rien fait de mal, vous pouvez être l'innocente victime d'une
+autre personne qui possédait précédemment votre IP. Dans ce cas, vous devriez
+contacter l'administrateur du wiki afin qu'il lève les sanctions.

@@ -1,0 +1,9 @@
+====== Bannissement automatique d'adresses IP ======
+
+Ce greffon vous permet de bannir automatiquement des utilisateurs, à travers
+leur adresse IP, qui ont tenté une attaque de force-brute sur la page de
+connexion de ce wiki. Suivant votre configuration, l'adresse IP peut être bannie
+sur l'ensemble du wiki ou seulement sur la page de login.
+
+Cette page d'administration vous permet de lister ou supprimer les adresses IP
+bannies actuellement.

@@ -1,0 +1,9 @@
+====== IP Address automatic ban ======
+
+This plugin allows you to automatically ban users, through their IP address,
+which attempt a bruteforce attack on this wiki's login page. Depending on your
+configuration, the IP address may be banned from viewing the whole wiki or just
+the login page.
+
+This admin part is for you to have a list of currently banned IP addresses. You
+can also delete IP addresses if you think this was an error from the plugin.
