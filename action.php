@@ -105,7 +105,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 				if($this->blocked[$ip] + $this->getConf('tba_block_time') > $time)
 				{
 					/* If the time isn't elapsed yet */
-					$this->_do_disable_login();
+					$this->_do_disable_login($ip, $this->blocked[$ip]);
 					$this->unlock();
 					return;
 				}
@@ -159,7 +159,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			$this->unlock();
 
 			if(array_key_exists($ip, $this->blocked))
-				$this->_do_disable_login($ip);
+				$this->_do_disable_login($ip, $this->blocked[$ip], true);
 		}
 	}
 
@@ -248,24 +248,27 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	/**
 	 * Change the login action to the show one
 	 *
-	 * @param $new False if it's not a new IP which is banned, the new banned IP otherwise
+	 * @param $ip The blocked IP
+	 * @param $block_ts The timestamp when blocking happened
+	 * @param $new False if it's not a new IP which is banned, true otherwise
 	 */
-	protected function _do_disable_login($new = false)
+	protected function _do_disable_login($ip, $block_ts, $new = false)
 	{
 		global $conf;
 
-		# TODO add languages things
+		$title = $this->getLang('page title');
+		$text = $this->locale_xhtml('banned');
+		$text .= sprintf('<p>'.$this->getLang('page content').'</p>', $ip, strftime($conf['dformat'], $block_ts));
 
 		header("HTTP/1.0 403 Forbidden");
 		echo<<<EOT
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head><title>Access denied</title></head>
+<head><title>$title</title></head>
 <body style="font-family: Arial, sans-serif">
   <div style="width:60%; margin: auto; background-color: #fcc;
               border: 1px solid #faa; padding: 0.5em 1em;">
-  Get off!
+  $text
   </div>
 </body>
 </html>
@@ -273,7 +276,7 @@ EOT;
 
 		// Send email for a new banned IP address
 		$email = $this->getConf('tba_send_mail');
-		if(!empty($email) && $new && !empty($new))
+		if(!empty($email) && $new)
 		{
 			// Prepare fields
 			$subject = sprintf($this->getLang('mailsubject'), $conf['title']);
@@ -281,7 +284,7 @@ EOT;
 			$from    = $conf['mailfrom'];
 
 			// Do some replacements
-			$body = str_replace('@IP@', $new, $body);
+			$body = str_replace('@IP@', $ip, $body);
 			$body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
 
 			// Finally send mail
