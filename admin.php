@@ -120,6 +120,21 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 		if($bans === false)
 			$bans = array();
 
+		/* Get the current time once and for all */
+		$curr_time = time();
+		$ban_time  = $this->getConf('tba_block_time');
+
+		/* Remove IP which have their ban expired */
+		$new_bans = array();
+		foreach($bans as $ip => $block_timestamp)
+		{
+			if($block_timestamp + $ban_time < $curr_time)
+				continue;
+			
+			$new_bans[$ip] = $block_timestamp;
+		}
+		$bans = $new_bans;
+
 		/* Now fill the admin panel */
 		echo $this->locale_xhtml('admin_intro');
 
@@ -136,8 +151,6 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 		{
 			foreach($bans as $ip => $block_timestamp)
 			{
-				# TODO remove IP if the ban is already done (check $block_timestamp)
-
 				$host = @gethostbyaddr($ip);
 				if($host === false || $host === $ip)
 					$host = '?';
