@@ -1,31 +1,12 @@
 <?php
-
 /**
- * Prevent against bruteforce attacks
- *
- * @license    GPL 3 (http://www.gnu.org/licenses/gpl.html)
- * @author     Aorimn <Aorimn@giboulees.net>
- * @version    0.4
+ * Cf licence informations in README
  */
-
-/**
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3, 
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * The license for this software can likely be found here: 
- * http://www.gnu.org/licenses/gpl-3.0.html
- */
-
 
 // must be run within Dokuwiki
 if(!defined('DOKU_INC'))
 	die('yeurk!');
+
 if(!defined('DOKU_PLUGIN'))
 	define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 

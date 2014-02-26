@@ -1,7 +1,11 @@
 <?php
+/**
+ * Cf licence informations in README
+ */
+
 // must be run within Dokuwiki
 if(!defined('DOKU_INC'))
-	die();
+	die('yeurk!');
 
 if(!defined('DOKU_PLUGIN'))
 	define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');

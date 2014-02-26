@@ -7,6 +7,8 @@ An IP address failing too many times to authenticate will be banned from the log
 
 An email can be sent to a configurable email address when an IP has just been banned.
 
+Current version: 0.5
+
 
 ChangeLog
 =========
@@ -22,3 +24,21 @@ ChangeLog
 0.4 Bugfix: wrong comparison between times (thanks ayambit)
     Vars renaming according to the plugin name
 
+0.5 Fix compatibility problem with "ondeniedlogin" and "showlogin2" plugins
+    Add admin panel to list/remove banned IP addresses
+
+
+Licence
+=======
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License version 3, 
+as published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+The license for this software can likely be found here: 
+http://www.gnu.org/licenses/gpl-3.0.html
