@@ -130,7 +130,7 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 		{
 			if($block_timestamp + $ban_time < $curr_time)
 				continue;
-			
+
 			$new_bans[$ip] = $block_timestamp;
 		}
 		$bans = $new_bans;
@@ -166,7 +166,7 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 		else
 		{
 			echo '<tr>';
-			echo '<td colspan="4">' . hsc($this->getLang('noban')) . '</td>';
+			echo '<td colspan="4" style="text-align:center; font-style: italic">' . hsc($this->getLang('noban')) . '</td>';
 			echo '</tr>';
 		}
 		echo '</table>';
