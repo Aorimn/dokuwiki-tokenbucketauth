@@ -54,12 +54,12 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 		{
 			$this->lock();
 
-			$content = '';
-			$file    = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
+			$content  = '';
+			$banned_f = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
 
 			/* Get the users which are blocked */
-			if(is_readable($file))
-				$content = file_get_contents($file);
+			if(is_readable($banned_f))
+				$content = file_get_contents($banned_f);
 
 			if(empty($content))
 				$this->blocked = array();
@@ -69,6 +69,25 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 			/* Deal with the case of unserialize() failing */
 			if($this->blocked === false)
 				$this->blocked = array();
+
+
+			$content = '';
+			$track_f = $conf['cachedir'] . '/' . $this->getConf('tba_iptime_file');
+
+			/* Get the previous, the registered array of visits */
+			if(is_readable($track_f))
+				$content = file_get_contents($track_f);
+			
+			/* Initialize from the file or not */
+			if(empty($content))
+				$this->users_tracker = array();
+			else
+				$this->users_tracker = @unserialize($content);
+
+			/* Deal with the case of unserialize() failing */
+			if($this->users_tracker === false)
+				$this->users_tracker = array();
+
 
 			$ip   = $_SERVER['REMOTE_ADDR'];
 			$time = time();
@@ -131,10 +150,10 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 				$this->blocked[$ip] = $time + $this->getConf('tba_mean_time');
 
 			/* Save the timestamps file */
-			io_saveFile($conf['cachedir'] . '/' . $this->getConf('tba_iptime_file'), serialize($this->users_tracker));
+			io_saveFile($track_f, serialize($this->users_tracker));
 
 			/* Save the blocked-IP file */
-			io_saveFile($file, serialize($this->blocked));
+			io_saveFile($banned_f, serialize($this->blocked));
 
 			/* Don't forget to unlock */
 			$this->unlock();
@@ -155,23 +174,6 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 		{
 			$this->lock();
 
-			$content = '';
-			$file = $conf['cachedir'] . '/' . $this->getConf('tba_iptime_file');
-
-			/* Get the previous, the registered array of visits */
-			if(is_readable($file))
-				$content = file_get_contents($file);
-			
-			/* Initialize from the file or not */
-			if(empty($content))
-				$this->users_tracker = array();
-			else
-				$this->users_tracker = @unserialize($content);
-
-			/* Deal with the case of unserialize() failing */
-			if($this->users_tracker === false)
-				$this->users_tracker = array();
-
 			$ip   = $_SERVER['REMOTE_ADDR'];
 			$time = time();
 
@@ -182,7 +184,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 				$this->users_tracker[$ip][] = $time;
 
 			/* Save the file */
-			io_saveFile($file, serialize($this->users_tracker));
+			io_saveFile($conf['cachedir'] . '/' . $this->getConf('tba_iptime_file'), serialize($this->users_tracker));
 
 			/* Don't forget to unlock */
 			$this->unlock();
