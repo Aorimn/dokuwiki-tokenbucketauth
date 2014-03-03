@@ -52,7 +52,7 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 		$ip = array_shift(array_keys($_REQUEST['delip']));
 
 		$lockf = $conf['cachedir'] . '/' . $this->getConf('tba_lockfile');
-		$file  = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
+		$banned_f  = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
 		
 		/* Lock the file for writing */
 		$lockfh = fopen($lockf, 'w', false);
@@ -67,7 +67,7 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 		}
 
 		/* Open the file to search for the $ip to delete */
-		$content = file_get_contents($file);
+		$content = file_get_contents($banned_f);
 
 		if(empty($content))
 		{
@@ -94,7 +94,25 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 			unset($blocked[$ip]);
 
 			/* Save the blocked-IP file */
-			io_saveFile($file, serialize($blocked));
+			io_saveFile($banned_f, serialize($blocked));
+
+			/* Remove any occurrence of this IP address in the tracker file */
+			$track_f = $conf['cachedir'] . '/' . $this->getConf('tba_iptime_file');
+			$content = file_get_contents($track_f);
+			$user_tracker = null;
+
+			if(empty($content))
+				$users_tracker = array();
+			else
+				$users_tracker = @unserialize($content);
+
+			if($users_tracker === false)
+				$users_tracker = array();
+
+			if(isset($users_tracker[$ip]))
+				unset($users_tracker[$ip]);
+
+			io_saveFile($track_f, serialize($users_tracker));
 
 			msg(sprintf($this->getLang('del_success'), $ip), 1);
 		}
@@ -112,8 +130,8 @@ class admin_plugin_tokenbucketauth extends DokuWiki_Admin_Plugin
 	{
 		global $conf;
 
-		$file = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
-		$bans = @file_get_contents($file);
+		$banned_f = $conf['cachedir'] . '/' . $this->getConf('tba_block_file');
+		$bans = @file_get_contents($banned_f);
 
 		if(empty($bans))
 			$bans = array();
