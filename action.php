@@ -258,9 +258,12 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 EOT;
 
 		// Send email for a new banned IP address
-		$email = $this->getConf('tba_send_mail');
-		if(!empty($email) && $new)
+		$to_be_notified = $this->getConf('tba_send_mail');
+		if(!empty($to_be_notified) && $new)
 		{
+			$to_be_notified = str_replace(' ', '', $to_be_notified);
+			$to_be_notifieds = explode(',', $to_be_notified);
+						
 			// Prepare fields
 			$subject = sprintf($this->getLang('mailsubject'), $conf['title']);
 			$body    = $this->locale_xhtml('mailbody');
@@ -269,9 +272,11 @@ EOT;
 			// Do some replacements
 			$body = str_replace('@IP@', $ip, $body);
 			$body = str_replace('@DOKUWIKIURL@', DOKU_URL, $body);
-
+			
 			// Finally send mail
-			mail_send($email, $subject, $body, $from);
+			foreach($to_be_notifieds as $email) {
+			    mail_send($email, $subject, $body, $from);
+			}
 		}
 
 		exit;
