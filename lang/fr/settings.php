@@ -9,6 +9,6 @@ $lang['tba_iptime_file'] = 'Fichier de comptage des tentatives de connexions.';
 $lang['tba_block_file']  = 'Fichier d\'enregistrement des utilisateurs bloqués.';
 $lang['tba_lockfile']    = 'Fichier verrou nécessaire à la gestion des autres fichiers.';
 
-$lang['tba_send_mail']   = 'Adresse de courriel où expédier les notifications de blocage.';
+$lang['tba_send_mail']   = 'Adresse de courriel où expédier les notifications de blocage. (séparé multiple adresse par comma)';
 
 $lang['tba_block_whole_wiki'] = 'Blocage du wiki tout entier (ou de la page de login uniquement, par défaut)';
