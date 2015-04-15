@@ -1,0 +1,5 @@
+新規禁止 IP アドレス： @IP@
+ 
+ 
+このメールは DokuWiki が作成しました。
+この自動メールを受信したくない場合、 @DOKUWIKIURL@ で「tokenbucketauth プラグイン」を参照して下さい。
