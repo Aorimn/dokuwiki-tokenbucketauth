@@ -37,7 +37,7 @@ class action_plugin_tokenbucketauth extends DokuWiki_Action_Plugin
 	/**
 	 * Register plugin's handlers
 	 */
-	public function register(&$controller)
+	public function register(Doku_Event_Handler $controller)
 	{
 		$controller->register_hook('AUTH_LOGIN_CHECK', 'BEFORE', $this, 'disable_login', array());
 		$controller->register_hook('AUTH_LOGIN_CHECK', 'AFTER', $this, 'register_login_fail', array());
